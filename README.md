@@ -2,8 +2,8 @@
 
 ## Copia o repositório
 sh```git clone https://github.com/PedroProgramming/LiveStreamFront.git```
-## Entra na pasta do projeto
-sh``````
+## Entrar na pasta do projeto
+sh```cd LiveStreamFront```
 ## Instale as dependências
 sh```npm install```
 
