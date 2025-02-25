@@ -5,7 +5,9 @@ const routes = [
   { path: "/sign-in", name: "sign-in", component: () => import("../views/SignInView.vue") },
   { path: "/sign-up", name: "sign-up", component: () => import("../views/SignUpView.vue") },
   { path: "/channel/:channel_name", name: "channel", component: () => import("../views/ChannelView.vue") },
-  { path: "/:identifier", name: "video-detail", component: () => import("../views/VideoDetail.vue"), props: true },
+  { path: "/video/:identifier", name: "video-detail", component: () => import("../views/VideoDetail.vue"), props: true },
+  { path: "/live/:identifier", name: "live-detail", component: () => import("../views/LiveDetail.vue"), props: true },
+
 ]
 
 const router = createRouter({

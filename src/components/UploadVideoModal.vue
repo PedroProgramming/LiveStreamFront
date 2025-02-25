@@ -69,6 +69,7 @@
 </template>
 
 <script>
+import { auth_fetch } from '../auth/auth';
 export default {
 name: "UploadVideoModal",
 props: {
@@ -79,42 +80,51 @@ props: {
 },
 data() {
     return {
-    videoTitle: "", // Título do vídeo
-    videoDescription: "", // Descrição do vídeo
-    videoFile: null, // Arquivo de vídeo carregado
+        videoTitle: "",
+        videoDescription: "",
+        videoFile: null
     };
 },
 methods: {
     closeModal() {
-    this.$emit("close"); // Emite um evento para o componente pai fechar o modal
+        this.$emit("close");
     },
     handleFileUpload(event) {
-    this.videoFile = event.target.files[0]; // Salva o arquivo selecionado
+        this.videoFile = event.target.files[0];
     },
-    submitVideo() {
-    if (!this.videoFile) {
-        alert("Por favor, selecione um arquivo de vídeo.");
-        return;
+    async submitVideo() {
+        if (!this.videoFile) {
+            alert("Por favor, selecione um arquivo de vídeo.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("video_data", JSON.stringify({
+            title: this.videoTitle,
+            description: this.videoDescription
+        }));
+        formData.append("video_file", this.videoFile);
+        
+       
+
+        try {
+            const response = await auth_fetch("http://127.0.0.1:8000/api/v1/channel/videos/upload", {
+                method: "POST",
+                body: formData
+            });
+            if (response["success"]) throw new Error("Erro ao enviar vídeo");
+            alert("Vídeo enviado com sucesso!");
+        } catch (error) {
+            alert(error.message);
+        }
+
+        this.videoTitle = "";
+        this.videoDescription = "";
+        this.videoFile = null;
+        this.closeModal();
     }
-
-    // Simula envio de dados (substituir com uma API real)
-    console.log("Enviando vídeo:");
-    console.log("Título:", this.videoTitle);
-    console.log("Descrição:", this.videoDescription);
-    console.log("Arquivo:", this.videoFile);
-
-    // Reset dos campos após envio
-    this.videoTitle = "";
-    this.videoDescription = "";
-    this.videoFile = null;
-
-    alert("Vídeo enviado com sucesso!");
-
-    // Fecha o modal
-    this.closeModal();
-    },
-},
-};
+}
+}
 </script>
 
 <style scoped>

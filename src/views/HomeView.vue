@@ -7,13 +7,19 @@
         
         <VideoList />
 
-        <VideoPlayerStream/>
+        <br>
+        <br>
+
+        <h1 class="text-3xl font-semibold text-center mb-6">Explorar Transmissões ao Vivo</h1>
+        <StreamList/>
+ 
     </div>
 </template>
 
 <script>
 import SearchBar from '../components/SearchBar.vue'
 import VideoList from '../components/VideoList.vue'
+import StreamList from '../components/StreamList.vue'
 import VideoPlayerStream from '../components/VideoPlayerStream.vue'
 
 import {auth_fetch} from "../auth/auth";
@@ -29,6 +35,7 @@ data(){
 components:{
     SearchBar,
     VideoList,
+    StreamList,
     VideoPlayerStream,
 },
 created() {

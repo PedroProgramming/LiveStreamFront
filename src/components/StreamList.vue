@@ -1,25 +1,24 @@
 <template>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        <VideoCard v-for="video in videos" :key="video.id" :video="video" />
+        <StreamCard v-for="live in lives" :key="live.id" :live="live" />
     </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import VideoCard from './VideoCard.vue'
+import StreamCard from './StreamCard.vue'
 
-const videos = ref([])
+const lives = ref([])
 
 const isLoading = ref(true);
 
-const fetchVideos = async () => {
+const fetchLives = async () => {
   isLoading.value = true;
   try {
-    const response = await fetch('http://127.0.0.1:8000/api/v1/channel/videos/list');
+    const response = await fetch('http://127.0.0.1:8000/api/v1/live/list');
     if (response.ok) {
       const data = await response.json();
-      console.log(data)
-      videos.value = data.videos;
+      lives.value = data.lives;
     } else {
       console.error('Erro ao buscar vídeos:', response.status);
     }
@@ -32,7 +31,7 @@ const fetchVideos = async () => {
 
 
 onMounted(() => {
-  fetchVideos()
+fetchLives()
 })
 
 </script>
